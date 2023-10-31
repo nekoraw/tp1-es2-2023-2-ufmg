@@ -1,0 +1,38 @@
+<link rel='stylesheet' type='text/css' media='screen' href={{
+    url_for('static', filename='css/register.css') }}>
+<div class="register_frame">
+    <div class="register_form">
+      <div class="register_header">
+        <h1>Registro</h1>
+      </div>
+
+      <form>
+        <div class="login_input">
+          <input
+            type="text"
+            class="text_input"
+            placeholder="nome de usuário"
+          />
+        </div>
+
+        <div class="login_input">
+          <input type="password" class="password_input" placeholder="senha" />
+        </div>
+
+        <div class="login_submit">
+          <input type="submit" class="submit_button" value="Registrar" />
+        </div>
+      </form>
+
+      Não possui uma conta?
+      <a
+        href=""
+        hx-get="/register"
+        hx-trigger="click"
+        hx-swap="outerHTML"
+        hx-target=".main_body"
+        hx-push-url="/register"
+        >Registre-se agora!</a
+      >
+    </div>
+  </div>
