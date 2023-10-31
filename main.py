@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request , Response
+from flask import Flask, render_template, request , Response, url_for
 from datetime import datetime
 
 app = Flask(__name__)
@@ -13,9 +13,11 @@ def hello_world():
 @app.route("/login")
 def login():
     response = Response(render_template("login.html"))
+    response.headers["HX-Redirect"] = url_for("login")
     return response
 
 @app.route("/register")
 def register():
     response = Response(render_template("register.html"))
+    response.headers["HX-Redirect"] = url_for("register")
     return response
