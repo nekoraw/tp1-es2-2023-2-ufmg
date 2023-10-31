@@ -16,25 +16,17 @@
           <h1>Login</h1>
         </div>
 
-        <form>
-          <div class="login_input">
-            <input
-              type="text"
-              class="text_input"
-              placeholder="nome de usuário"
-            />
-          </div>
+        <form hx-post="/verify_login" hx-target="this" hx-swap="outerHTML">
+          <div hx-get="/username_field" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 
-          <div class="login_input">
-            <input type="password" class="password_input" placeholder="senha" />
-          </div>
+          <div hx-get="/password_field" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 
           <div class="login_submit">
-            <input type="submit" class="submit_button" value="Entrar" />
+            <input type="submit" class="submit_button" value="Entrar"/>
           </div>
         </form>
 
-        <div class="doesnt_have_account_text">
+        <div class="bottom_form_text">
         Não possui uma conta?
         <a
           href=""

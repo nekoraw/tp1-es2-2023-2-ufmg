@@ -6,18 +6,18 @@
     <title>Sistema de Estoque</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel='stylesheet' type='text/css' media='screen' href={{
-    url_for('static', filename='css/register.css') }}>
+    url_for('static', filename='css/login.css') }}>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
   </head>
   <body class="main_body">
-    <div class="register_frame">
-      <div class="register_form">
-        <div class="register_header">
+    <div class="login_frame">
+      <div class="login_form">
+        <div class="login_header">
           <h1>Registro</h1>
         </div>
 
         <form>
-          <div class="login_input">
+          <div class="login_field">
             <input
               type="text"
               class="text_input"
@@ -25,7 +25,7 @@
             />
           </div>
 
-          <div class="login_input">
+          <div class="password_field">
             <input type="password" class="password_input" placeholder="senha" />
           </div>
 
@@ -34,7 +34,7 @@
           </div>
         </form>
 
-        <div class="already_have_account_text">
+        <div class="bottom_form_text">
         Já possui uma conta?  
         <a
           href=""
