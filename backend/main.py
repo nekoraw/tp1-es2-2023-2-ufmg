@@ -1,7 +1,9 @@
 from fastapi import FastAPI
+from routes import authentications
 
 app = FastAPI()
+app.include_router(authentications.router)
 
 @app.get("/")
-def read_root():
+def root():
     return {"Hello": "World"}
