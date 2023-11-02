@@ -14,7 +14,9 @@ class DatabaseUser(BaseModel):
     email: Optional[str] = Field()
 
 
-async def find_user(query: dict) -> DatabaseUser:
+async def find_user(query: dict) -> DatabaseUser | None:
     result = await users.find_one(query)
-    return result
+    if result is None:
+        return
 
+    return DatabaseUser(**result)

@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
+
 load_dotenv()
 
 
@@ -13,7 +14,7 @@ class MongoDBConnection:
         return cls._instance
 
     def __init__(self):
-        self.client = AsyncIOMotorClient(os.environ.get("MONGODB_URI"))
+        self.client = AsyncIOMotorClient(os.environ.get("MONGODB_URI"), uuidRepresentation="standard")
         self.db = self.client[os.environ.get("MONGODB_DATABASE")]
 
     def get_collection(self, collection_name):
