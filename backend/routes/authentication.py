@@ -22,7 +22,8 @@ async def login(data: LoginRequestSchema) -> DatabaseSession:
     if login_user is None:
         raise HTTPException(detail={"error": "User not found."}, status_code=404)
 
-    if not bcrypt.checkpw(data.password.encode(), login_user.password.encode()):
+    is_password_correct = bcrypt.checkpw(data.password.encode(), login_user.password.encode())
+    if not is_password_correct:
         raise HTTPException(detail={"error": "Incorrect password."}, status_code=403)
 
     return await create_new_session(data.username)
