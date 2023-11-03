@@ -32,7 +32,7 @@ async def verify_session(session: Annotated[UUID, Header()]):
 
 
 @router.get("/get_list", dependencies=[Depends(verify_session)])
-async def get_todo_list(session: Annotated[UUID, Header()]) -> DatabaseToDoList:
+async def get_todo_list(session: Annotated[UUID, Header()]) -> DatabaseToDoList | None:
     database_session = await find_session({"session": session})
     return await find_todo_list({"username": database_session.username})
 

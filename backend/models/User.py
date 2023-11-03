@@ -10,7 +10,7 @@ users = connection.get_collection("users")
 class DatabaseUser(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
     username: str = Field(max_length=16)
-    password_hash: str = Field()
+    password: str = Field()
     email: Optional[str] = Field()
 
 

@@ -1,66 +1,68 @@
 import { createSignal } from "solid-js";
-import { A, useNavigate } from "@solidjs/router";
 import styles from "./login.module.css";
+import { A, useNavigate } from "@solidjs/router";
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+interface RegisterRequest {
+  username: string;
+  password: string;
+  email: string;
+}
 
 function InvalidUserMessage() {
   return (
     <>
       <div class={`${styles.error_message} ${styles.bottom_form_text}}`}>
-        Usuário não existe.
+        Usuário já existe.
       </div>
     </>
   );
 }
 
-function InvalidPasswordMessage() {
+function InvalidEmailMessage() {
   return (
     <>
       <div class={`${styles.error_message} ${styles.bottom_form_text}}`}>
-        Senha incorreta.
+        E-mail está no formato incorreto.
       </div>
     </>
   );
 }
 
-interface LoginRequest {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
-  username: string;
-  session: string;
-  expires_in: number;
-}
-
-function LoginPage() {
+function RegisterPage() {
   const [validUser, setValidUser] = createSignal(true);
-  const [validPassword, setValidPassword] = createSignal(true);
+  const [validEmail, setValidEmail] = createSignal(true);
   const [username, setUsername] = createSignal("");
   const [password, setPassword] = createSignal("");
+  const [email, setEmail] = createSignal("");
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    const data: LoginRequest = { username: username(), password: password() };
-    fetch("http://127.0.0.1:8000/login", {
+    if (!emailRegex.test(email())) {
+      setValidEmail(false);
+      return;
+    }
+
+    const data: RegisterRequest = {
+      username: username(),
+      password: password(),
+      email: email(),
+    };
+    fetch("http://127.0.0.1:8000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then(async (response) => {
-      const data: LoginResponse = await response.json();
-      if (response.status === 403) {
-        setValidPassword(false);
-      } else if (response.status === 404) {
+    }).then((response) => {
+      if (response.status === 422) {
+        setValidEmail(false);
+      } else if (response.status === 409) {
         setValidUser(false);
-      } else if (response.status === 200) {
-        // tem q definir mais coisas em produção para nao ter problemas de csrf e tals
-        document.cookie = `$session=${data.session}; expires=${new Date(
-          data.expires_in * 1000
-        ).toUTCString()}; path=/;`;
-        window.alert("Logado com sucesso.");
-        navigate("/home", { replace: true });
+      } else if (response.status === 201) {
+        window.alert("Usuário criado com sucesso.");
+        navigate("/login", { replace: true });
       } else {
         window.alert("Erro interno de servidor.");
       }
@@ -72,7 +74,7 @@ function LoginPage() {
       <div class={styles.login_frame}>
         <div class={styles.login_form}>
           <div class={styles.login_header}>
-            <h1>Login</h1>
+            <h1>Registro</h1>
           </div>
 
           <form action="post" autocomplete="off">
@@ -89,18 +91,26 @@ function LoginPage() {
               {!validUser() && <InvalidUserMessage />}
             </div>
 
+            <div class={styles.login_field}>
+              <input
+                name="email"
+                type="email"
+                class={`${styles.text_input} ${!validEmail() && styles.error}`}
+                onInput={(obj) => setEmail(obj.target.value)}
+                onBeforeInput={() => setValidEmail(true)}
+                placeholder="endereço de e-mail"
+              />
+              {!validEmail() && <InvalidEmailMessage />}
+            </div>
+
             <div class={styles.password_field}>
               <input
                 name="password"
                 type="password"
-                class={`${styles.password_input} ${
-                  !validPassword() && styles.error
-                }`}
+                class={styles.password_input}
                 onInput={(obj) => setPassword(obj.target.value)}
-                onBeforeInput={() => setValidPassword(true)}
                 placeholder="senha"
               />
-              {!validPassword() && <InvalidPasswordMessage />}
             </div>
 
             <div class={styles.login_submit}>
@@ -108,15 +118,15 @@ function LoginPage() {
                 type="button"
                 class={styles.submit_button}
                 onClick={handleLogin}
-                value="Entrar"
+                value="Registrar"
               />
             </div>
           </form>
 
           <div class={styles.bottom_form_text}>
-            Não possui uma conta?
-            <A href="/register" class={styles.change_auth_page}>
-              Registre-se agora!
+            Já possui uma conta?
+            <A href="/login" class={styles.change_auth_page}>
+              Faça login.
             </A>
           </div>
         </div>
@@ -125,4 +135,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

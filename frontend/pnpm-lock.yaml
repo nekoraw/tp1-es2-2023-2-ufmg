@@ -5,9 +5,21 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@solidjs/router':
+    specifier: ^0.8.3
+    version: 0.8.3(solid-js@1.8.5)
+  '@types/bcryptjs':
+    specifier: ^2.4.5
+    version: 2.4.5
+  '@types/js-cookie':
+    specifier: ^3.0.5
+    version: 3.0.5
   babel-preset-solid:
     specifier: ^1.8.4
     version: 1.8.4(@babel/core@7.23.2)
+  js-cookie:
+    specifier: ^3.0.5
+    version: 3.0.5
   solid-js:
     specifier: ^1.8.5
     version: 1.8.5
@@ -551,6 +563,14 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  /@solidjs/router@0.8.3(solid-js@1.8.5):
+    resolution: {integrity: sha512-oJuqQo10rVTiQYhe1qXIG1NyZIZ2YOwHnlLc8Xx+g/iJhFCJo1saLOIrD/Dkh2fpIaIny5ZMkz1cYYqoTYGJbg==}
+    peerDependencies:
+      solid-js: ^1.5.3
+    dependencies:
+      solid-js: 1.8.5
+    dev: false
+
   /@types/babel__core@7.20.3:
     resolution: {integrity: sha512-54fjTSeSHwfan8AyHWrKbfBWiEUrNTZsUwPTDSNaaP1QDQIZbeNUg3a59E9D+375MzUw/x1vx2/0F5LBz+AeYA==}
     dependencies:
@@ -579,6 +599,14 @@ packages:
     dependencies:
       '@babel/types': 7.23.0
     dev: true
+
+  /@types/bcryptjs@2.4.5:
+    resolution: {integrity: sha512-tOF6TivOIvq+TWQm78335CMdyVJhpBG3NUdWQDAp95ax4E2rSKbws/ELHLk5EBoucwx/tHt3/hhLOHwWJgVrSw==}
+    dev: false
+
+  /@types/js-cookie@3.0.5:
+    resolution: {integrity: sha512-dtLshqoiGRDHbHueIT9sjkd2F4tW1qPSX2xKAQK8p1e6pM+Z913GM1shv7dOqqasEMYbC5zEaClJomQe8OtQLA==}
+    dev: false
 
   /ansi-styles@3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
@@ -720,6 +748,11 @@ packages:
     resolution: {integrity: sha512-ZhMwEosbFJkA0YhFnNDgTM4ZxDRsS6HqTo7qsZM08fehyRYIYa0yHu5R6mgo1n/8MgaPBXiPimPD77baVFYg+A==}
     engines: {node: '>=12.13'}
     dev: true
+
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+    dev: false
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
