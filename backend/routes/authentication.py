@@ -1,12 +1,12 @@
 import re
-from typing import Dict, Any
+from typing import Any
 
 from fastapi import APIRouter, HTTPException
 from database.mongodb_connection import MongoDBConnection
 from models.Authentication import LoginRequestSchema, RegisterRequestSchema
 from constants import regexes
 from models.Session import DatabaseSession, create_new_session
-from models.User import find_user, DatabaseUser
+from models.User import find_user
 import bcrypt
 
 
