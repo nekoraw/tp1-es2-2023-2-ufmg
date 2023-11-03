@@ -1,6 +1,7 @@
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { A, useNavigate } from "@solidjs/router";
 import styles from "./login.module.css";
+import Cookies from "js-cookie";
 
 function InvalidUserMessage() {
   return (
@@ -39,6 +40,12 @@ function LoginPage() {
   const [username, setUsername] = createSignal("");
   const [password, setPassword] = createSignal("");
   const navigate = useNavigate();
+
+  onMount(async () => {
+    if (Cookies.get("$session") !== undefined) {
+      navigate("/", { replace: true });
+    }
+  });
 
   const handleLogin = () => {
     const data: LoginRequest = { username: username(), password: password() };

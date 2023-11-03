@@ -32,9 +32,9 @@ async def verify_session(session: Annotated[UUID, Header()]):
 
 
 @router.get("/get_list", dependencies=[Depends(verify_session)])
-async def get_todo_list(session: Annotated[UUID, Header()]) -> DatabaseToDoList | None:
+async def get_todo_list(session: Annotated[UUID, Header()]) -> DatabaseToDoList:
     database_session = await find_session({"session": session})
-    return await find_todo_list({"username": database_session.username})
+    return await find_todo_list({"username": database_session.username}, session)
 
 
 @router.post("/create_list", dependencies=[Depends(verify_session)])
@@ -42,7 +42,7 @@ async def create_todo_list(session: Annotated[UUID, Header()]) -> DatabaseToDoLi
     return await create_new_todo_list(session)
 
 
-@router.post("/add_item", dependencies=[Depends(verify_session)])
+@router.post("/add_item", dependencies=[Depends(verify_session)], status_code=201)
 async def add_item(session: Annotated[UUID, Header()], data: ToDoItemSchema) -> DatabaseToDoList:
     return await add_item_to_todo_list(content=data, session=session)
 

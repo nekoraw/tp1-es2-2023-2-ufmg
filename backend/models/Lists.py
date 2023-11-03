@@ -24,18 +24,16 @@ class DatabaseToDoList(BaseModel):
     items: List[ToDoItemSchema] = Field()
 
 
-async def find_todo_list(query: dict) -> DatabaseToDoList | None:
+async def find_todo_list(query: dict, session: UUID) -> DatabaseToDoList | None:
     result = await todo_lists.find_one(query)
     if result is None:
-        return
+        return await create_new_todo_list(session)
 
     return DatabaseToDoList(**result)
 
 
 async def create_new_todo_list(session: UUID) -> DatabaseToDoList:
     database_session = await find_session({"session": session})
-    if await find_todo_list({"username": database_session.username}) is not None:
-        raise HTTPException(status_code=409, detail="User already has a todo list.")
 
     todo_list = DatabaseToDoList(username=database_session.username, items=[])
     inserted = await todo_lists.insert_one(todo_list.model_dump(by_alias=True, exclude={"id"}))
@@ -45,8 +43,6 @@ async def create_new_todo_list(session: UUID) -> DatabaseToDoList:
 
 async def add_item_to_todo_list(content: ToDoItemSchema, session: UUID) -> DatabaseToDoList:
     database_session = await find_session({"session": session})
-    if await find_todo_list({"username": database_session.username}) is None:
-        raise HTTPException(status_code=404, detail="User does not have a todo list yet.")
 
     if await todo_lists.find_one({"items.name": content.name}) is not None:
         raise HTTPException(status_code=409, detail="This task already exists.")
@@ -62,8 +58,6 @@ async def add_item_to_todo_list(content: ToDoItemSchema, session: UUID) -> Datab
 
 async def remove_item_from_todo_list(item_name: str, session: UUID) -> DatabaseToDoList:
     database_session = await find_session({"session": session})
-    if await find_todo_list({"username": database_session.username}) is None:
-        raise HTTPException(status_code=404, detail="User does not have a todo list yet.")
 
     update_result = await todo_lists.find_one_and_update(
         {"$and": [{"username": database_session.username}, {"items.name": item_name}]},
@@ -78,8 +72,6 @@ async def remove_item_from_todo_list(item_name: str, session: UUID) -> DatabaseT
 
 async def complete_item_on_todo_list(item_name: str, session: UUID, status: bool) -> DatabaseToDoList:
     database_session = await find_session({"session": session})
-    if await find_todo_list({"username": database_session.username}) is None:
-        raise HTTPException(status_code=404, detail="User does not have a todo list yet.")
 
     update_result = await todo_lists.find_one_and_update(
         {"$and": [{"username": database_session.username}, {"items.name": item_name}]},

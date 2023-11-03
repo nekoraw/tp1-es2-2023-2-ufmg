@@ -1,5 +1,6 @@
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import styles from "./login.module.css";
+import Cookies from "js-cookie";
 import { A, useNavigate } from "@solidjs/router";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,6 +38,12 @@ function RegisterPage() {
   const [password, setPassword] = createSignal("");
   const [email, setEmail] = createSignal("");
   const navigate = useNavigate();
+
+  onMount(async () => {
+    if (Cookies.get("$session") !== undefined) {
+      navigate("/", { replace: true });
+    }
+  });
 
   const handleLogin = () => {
     if (!emailRegex.test(email())) {

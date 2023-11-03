@@ -1,0 +1,180 @@
+.main_page {
+  margin: 1%;
+}
+
+.header {
+  display: flex;
+  min-height: 120px;
+  flex-direction: row;
+}
+
+.header_title {
+  display: flex;
+  justify-content: left;
+  align-items: baseline;
+  width: auto;
+  flex-direction: column;
+}
+
+div.add_form {
+  display: flex;
+  justify-content: right;
+  flex-direction: column;
+  align-content: flex-end;
+  border-radius: 5px;
+  margin-left: auto;
+}
+
+.box_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  font-size: 12px;
+  background-color: black;
+  color: white;
+}
+
+form.add_form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.input_label {
+  padding: 8px;
+}
+
+.text_input {
+  padding: 3px 3px;
+  margin-left: 8px;
+}
+
+.buttons {
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+div.checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+input.checkbox {
+  margin-left: 8px;
+  width: 15px;
+}
+
+div.add_button {
+  margin-left: 47px;
+}
+
+input.add_button {
+  background-color: lightgreen;
+  border: 1px solid black;
+  color: black;
+  border-radius: 8px;
+  font-size: 12px;
+  padding: 5px 5px;
+}
+
+input.add_button:hover {
+  background-color: rgb(127, 211, 127);
+}
+
+input.add_button:active {
+  background-color: rgb(95, 160, 95);
+}
+
+.tasks {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.task {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid #727272;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.incomplete_task {
+  background-color: rgb(253, 222, 222);
+}
+
+.incomplete_task:hover {
+  background-color: rgb(236, 208, 208);
+}
+
+.complete_task {
+  background-color: rgb(195, 253, 195);
+}
+
+.complete_task:hover {
+  background-color: rgb(186, 240, 186);
+}
+
+.item_name {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.item_right {
+  display: flex;
+  min-width: 36px;
+  justify-content: end;
+  border-left: 2px solid #727272;
+}
+
+input.check_complete_button {
+  background-color: rgb(162, 247, 169);
+  border: 1px solid black;
+  color: black;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+input.check_complete_button:hover {
+  background-color: rgb(154, 216, 159);
+}
+
+input.check_complete_button:active {
+  background-color: rgb(105, 163, 110);
+}
+
+input.delete_button {
+  background-color: rgb(248, 188, 188);
+  border: 1px solid black;
+  color: black;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+input.delete_button:hover {
+  background-color: rgb(228, 172, 172);
+}
+
+input.delete_button:active {
+  background-color: rgb(185, 138, 138);
+}
+
+hr.rounded {
+  border-top: 3px solid #727272;
+  border-radius: 5px;
+}
