@@ -2,14 +2,7 @@ import { createSignal, onMount } from "solid-js";
 import styles from "./login.module.css";
 import Cookies from "js-cookie";
 import { A, useNavigate } from "@solidjs/router";
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-interface RegisterRequest {
-  username: string;
-  password: string;
-  email: string;
-}
+import { verifyEmailRegex, RegisterRequest } from "./AuthStructure";
 
 function InvalidUserMessage() {
   return (
@@ -46,8 +39,9 @@ function RegisterPage() {
   });
 
   const handleLogin = () => {
-    if (!emailRegex.test(email())) {
-      setValidEmail(false);
+    setValidEmail(verifyEmailRegex(email()));
+
+    if (!validEmail()) {
       return;
     }
 

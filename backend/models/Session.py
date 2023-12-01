@@ -20,6 +20,10 @@ class DatabaseSession(BaseModel):
     expires_in: int = Field()
 
 
+def get_new_session_expiry_date():
+    return math.floor(datetime.now(UTC).timestamp() + EXPIRY_TIME_SECONDS)
+
+
 async def find_session(query: dict) -> DatabaseSession | None:
     result = await sessions.find_one(query)
     if result is None:
@@ -33,7 +37,7 @@ async def create_new_session(username: str) -> DatabaseSession:
         session = DatabaseSession(
             username=username,
             session=uuid.uuid4(),
-            expires_in=math.floor(datetime.now(UTC).timestamp() + EXPIRY_TIME_SECONDS),
+            expires_in=get_new_session_expiry_date(),
         )
 
         if (await find_session({"session": session.session})) is not None:

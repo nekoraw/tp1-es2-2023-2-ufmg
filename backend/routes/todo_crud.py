@@ -14,11 +14,17 @@ from models.Lists import (
     complete_item_on_todo_list,
     create_new_todo_list,
 )
-from models.Session import find_session
+from models.Session import find_session, DatabaseSession
 
 router = APIRouter()
 connection = MongoDBConnection()
 users = connection.get_collection("users")
+
+
+def verify_session_expiry_date(database_session: DatabaseSession):
+    is_expired = database_session.expires_in - math.floor(datetime.now(UTC).timestamp()) <= 0
+    if is_expired:
+        raise HTTPException(status_code=401, detail="Invalid user session")
 
 
 async def verify_session(session: Annotated[UUID, Header()]):
@@ -26,9 +32,7 @@ async def verify_session(session: Annotated[UUID, Header()]):
     if database_session is None:
         raise HTTPException(status_code=401, detail="Invalid user session")
 
-    is_expired = database_session.expires_in - math.floor(datetime.now(UTC).timestamp()) <= 0
-    if is_expired:
-        raise HTTPException(status_code=401, detail="Invalid user session")
+    verify_session_expiry_date(database_session)
 
 
 @router.get("/get_list", dependencies=[Depends(verify_session)])

@@ -11,7 +11,7 @@ class DatabaseUser(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
     username: str = Field(max_length=16)
     password: str = Field()
-    email: Optional[str] = Field()
+    email: Optional[str] = ""
 
 
 async def find_user(query: dict) -> DatabaseUser | None:
