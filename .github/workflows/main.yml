@@ -1,0 +1,48 @@
+name: running unit tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        python-version: [3.10]
+
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v4
+    
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Installing Python dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Running unit tests using pytest
+        run: |
+          cd backend
+          pytest tests/unit_tests/
+
+      - name: Setting up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.12
+
+      - name: Installing pnpm
+        run: npm install -g pnpm
+
+      - name: Installing frontend dependencies
+        run: |
+          cd frontend
+          pnpm install
+
+      - name: Run unit tests using Jest
+        run: |
+          cd frontend
+          pnpm test
