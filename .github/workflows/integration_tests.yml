@@ -1,0 +1,35 @@
+name: running integration tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v4
+    
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Installing Python dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: '6.0'
+
+
+      - name: Running unit tests using pytest
+        run: |
+          cd backend
+          cp .env.example .env
+          pytest tests/integration_tests/
+
+  
